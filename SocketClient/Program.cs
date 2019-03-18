@@ -13,7 +13,7 @@ namespace SocketClient
     class Program
     {
         //本地ip地址
-        private static string localHost = "127.0.0.1";
+        private static string localHost = "192.168.1.123";//"127.0.0.1";
         //客户端需要访问对应的端口
         private static int myPort = 8888;
         //客户端接受服务器发送的消息
@@ -31,7 +31,7 @@ namespace SocketClient
             }
             catch (Exception ex)
             {
-                Console.WriteLine("连接服务器失败 //n"+ex.Message);
+                Console.WriteLine("连接服务器失败 /n"+ex.Message);
                 Console.ReadLine();
                 return;
             }
@@ -52,7 +52,7 @@ namespace SocketClient
                 clientSocket.Close();
             }
             Console.WriteLine("发送完毕");
-            Console.ReadLine();
+            //Console.ReadLine();
         }
     }
 }
