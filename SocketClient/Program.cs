@@ -52,7 +52,7 @@ namespace SocketClient
                 clientSocket.Close();
             }
             Console.WriteLine("发送完毕");
-            //Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }

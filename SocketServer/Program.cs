@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SocketServer
 {
@@ -34,20 +35,9 @@ namespace SocketServer
                 //socket连接的最大容量
                 server.Listen(int.MaxValue);
                 Console.WriteLine("启动监听{0}成功", server.LocalEndPoint.ToString());
-                ///***开启一个线程与客户端建立连接***/
-                //Thread listenThread = new Thread(ClientConnect);
-                //listenThread.Start();//开启线程
-                while (true)
-                {
-                    //服务端~客户端尝试通讯
-                    Socket clientSocket = server.Accept();
-                    clientSocket.Send(Encoding.UTF8.GetBytes("Server say hello to Client..."));
-                    Console.WriteLine("Server send hello to Client...");
-                    //开启一个线程准备接受客户端消息
-                    Thread receiveThread = new Thread(new ParameterizedThreadStart(ReceiveMessage));
-                    receiveThread.Start();
-                }
-                
+                /***开启一个线程与客户端建立连接***/
+                Thread listenThread = new Thread(ClientConnect);
+                listenThread.Start();//开启线程
             }
             catch (Exception ex)
             {
@@ -67,16 +57,18 @@ namespace SocketServer
                 clientSocket.Send(Encoding.UTF8.GetBytes("Server say hello to Client..."));
                 Console.WriteLine("Server send hello to Client...");
                 //开启一个线程准备接受客户端消息
-                Thread receiveThread = new Thread(new ParameterizedThreadStart( ReceiveMessage));
-                receiveThread.Start();
+                Thread receiveThread = new Thread(new ParameterizedThreadStart(ReceiveMessage));
+                receiveThread.Start(clientSocket);
             }
         }
         /// <summary>
         /// 接收消息
         /// </summary>
         /// <param name="clientSocket"></param>
-        private static void ReceiveMessage(object clientSocket)
+        private static void ReceiveMessage(object clientSocket=null)
         {
+            if (null == clientSocket)
+                return;
             try
             {
                 Socket myClientSocket = clientSocket as Socket;
