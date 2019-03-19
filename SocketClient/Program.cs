@@ -11,6 +11,8 @@ using System.Threading;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
+using System.Runtime.Serialization.Json;
+
 namespace SocketClient
 {
     class Program
@@ -46,10 +48,14 @@ namespace SocketClient
                 Console.WriteLine("客户端接收服务器消息：{0}", Encoding.UTF8.GetString(result, 0, receiveNum));
                 //客户端发送消息给服务器
                 string sendMessage = "Clinet get message from server:" + DateTime.Now;
+
+                //**方法一***//
                 Dictionary<string,string> dic=new Dictionary<string,string>();
                 dic.Add("name","yangyawei");
                 dic.Add("age","18");
                 string json = JsonConvert.SerializeObject(dic);
+                //*****//
+
                 //clientSocket.Send(Encoding.UTF8.GetBytes(sendMessage));
                 clientSocket.Send(Encoding.UTF8.GetBytes(json));
                 Console.WriteLine("Client send hello to Server...");

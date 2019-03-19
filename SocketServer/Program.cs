@@ -85,8 +85,10 @@ namespace SocketServer
                     //通过clientSocket接收消息
                     int receiveNum = myClientSocket.Receive(result);
 
+                    //***方法一**//
                     string str = Encoding.UTF8.GetString(result, 0, receiveNum);
                     Dictionary<string, string> dic = JsonConvert.DeserializeObject<Dictionary<string, string>>(str);
+                    //*****//
 
                     Console.WriteLine("服务器接收客户端{0}消息{1}///{2}", myClientSocket.RemoteEndPoint.ToString(),
                         str);
