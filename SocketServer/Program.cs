@@ -9,6 +9,9 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+
 namespace SocketServer
 {
     class Program
@@ -81,8 +84,12 @@ namespace SocketServer
                     }
                     //通过clientSocket接收消息
                     int receiveNum = myClientSocket.Receive(result);
-                    Console.WriteLine("服务器接收客户端{0}消息{1}", myClientSocket.RemoteEndPoint.ToString(),
-                        Encoding.UTF8.GetString(result, 0, receiveNum));
+
+                    string str = Encoding.UTF8.GetString(result, 0, receiveNum);
+                    Dictionary<string, string> dic = JsonConvert.DeserializeObject<Dictionary<string, string>>(str);
+
+                    Console.WriteLine("服务器接收客户端{0}消息{1}///{2}", myClientSocket.RemoteEndPoint.ToString(),
+                        str);
                 }
             }
             catch (Exception)
