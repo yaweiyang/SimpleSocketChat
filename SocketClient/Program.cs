@@ -55,7 +55,6 @@ namespace SocketClient
                 dic.Add("age","18");
                 string json = JsonConvert.SerializeObject(dic);
                 //*****//
-
                 //clientSocket.Send(Encoding.UTF8.GetBytes(sendMessage));
                 clientSocket.Send(Encoding.UTF8.GetBytes(json));
                 Console.WriteLine("Client send hello to Server...");
